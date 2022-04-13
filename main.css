@@ -1,0 +1,41 @@
+body{
+  padding:0;
+  margin: 0;
+}
+
+h1{
+  text-align: center;
+}
+
+h2{
+  border-left: 16px solid #080;
+}
+
+div{
+  margin: 4px;
+  padding: 4px;
+}
+
+.left-area{
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  left: 0;
+  width: 30%;
+  background-color: #cfc;
+}
+
+.main-area{
+  margin: 0;
+  padding: 0;
+  width: 70%;
+  position: absolute;
+  right: 0;
+  background-color: #ccf;
+}
+
+.box{
+  border: 2px solid #222;
+  border-radius: 4px;
+
+}
