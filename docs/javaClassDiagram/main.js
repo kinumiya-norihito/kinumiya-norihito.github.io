@@ -105,6 +105,7 @@ const load = () => {
         //console.log(textList[i]);
         prm = textList[i].match(/\([^)]*\)/)[0];
         textList[i] = textList[i].replace(prm,'');
+        textList[i] = textList[i].replace(/^ +| +$/g,'');
         prm = prm.replace(/\)|\(/g,'');
         prm = prm.replace(/ +,|, +/g,',');
         prm = prm.split(',');
