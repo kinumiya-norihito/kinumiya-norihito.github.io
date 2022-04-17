@@ -16,6 +16,14 @@ div{
   padding: 4px;
 }
 
+b{
+  color: #00c;
+}
+
+strong{
+  color: #c00;
+}
+
 .left-area{
   margin: 0;
   padding: 0;
