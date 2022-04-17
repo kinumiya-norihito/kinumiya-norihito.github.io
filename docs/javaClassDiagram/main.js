@@ -100,8 +100,8 @@ const load = () => {
 
       if(textList[i].indexOf(')')>=0){
         //コンストラクタかメソッド
-        if(lf!=2)returnText += '--\n';
-        if(lf!=1)returnText += '--\n';
+        if(lf==0)returnText += '--\n--\n';
+        if(lf==1)returnText += '--\n';
         //console.log(textList[i]);
         prm = textList[i].match(/\([^)]*\)/)[0];
         textList[i] = textList[i].replace(prm,'');
