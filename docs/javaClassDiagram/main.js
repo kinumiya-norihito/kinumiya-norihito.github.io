@@ -5,7 +5,10 @@ const load = () => {
   proce = () => {
     let importText = importArea.value, textList, returnText = m1 = m2 = m3 = m4 = '', lf = 0, prm, cnstrct,i=0,sp,ep,lv=0;
     //console.log('【原文】\n'+importText);
-
+    
+    //エスケープ系の削除
+    importText = importText.replace(/\\./g,'');
+    
     //文字列の削除
     importText = importText.replace(/"[^"]*"/g,'');
     //console.log('【文字列削除】\n'+importText);
