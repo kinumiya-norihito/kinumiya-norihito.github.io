@@ -5,10 +5,10 @@ const load = () => {
   proce = () => {
     let importText = importArea.value, textList, returnText = m1 = m2 = m3 = m4 = '', lf = 0, prm, cnstrct,i=0,sp,ep,lv=0;
     //console.log('【原文】\n'+importText);
-    
+
     //エスケープ系の削除
     importText = importText.replace(/\\./g,'');
-    
+
     //文字列の削除
     importText = importText.replace(/"[^"]*"/g,'');
     //console.log('【文字列削除】\n'+importText);
@@ -109,9 +109,7 @@ const load = () => {
         prm = textList[i].match(/\([^)]*\)/)[0];
         textList[i] = textList[i].replace(prm,'');
         textList[i] = textList[i].replace(/^ +| +$/g,'');
-        prm = prm.replace(/\)|\(/g,'');
-        prm = prm.replace(/ +,|, +/g,',');
-        prm = prm.split(',');
+
         //console.log(textList[i],prm);
         if(textList[i].indexOf(textList[0])>=0){
           //コンストラクタ
@@ -120,16 +118,44 @@ const load = () => {
         }
         else{
           //メソッド
-          m3 = ': '+textList[i].match(/^[^ ]+/)[0];
+          //m3 = ': '+textList[i].match(/^[^ ]+/)[0];
+
           m4 = textList[i].match(/[^ ]+$/)[0];
+          m3 = ': ' + textList[i].replace(new RegExp(' +'+m4),'');
           //console.log(m4);
         }
 
         returnText += m2 + m1 + m4 + '(';
         //console.log(prm);
+        prm = prm.replace(/\)|\(/g,'');
+        let rap = [];
+        lv = 0;
+        while(prm[i]){
+          switch(prm[i]){
+            case '<':
+              lv++;
+              if(lv==1)sp=i;
+              break;
+            case '>':
+              lv--;
+              if(lv==0){
+                ep=i+1;
+                //console.log(importText.substring(sp,ep));
+                rap.push(prm.substring(sp,ep));
+                prm = prm.replace(prm.substring(sp,ep),'*rap*');
+                i = sp;
+              }
+              break;
+            default:
+          }
+          i++;
+        }
+        console.log(rap);
+        prm = prm.replace(/ +,|, +/g,',');
+        prm = prm.split(',');
         for(let j=0;prm[j];j++){
           const param = prm[j].split(' ');
-          returnText += param[1]+': '+param[0];
+          returnText += param[1]+': '+param[0].replace(/\*rap\*/,rap.pop());
           returnText += (j+1)<prm.length?', ':'';
         }
         returnText += ')'+ m3 + m2;
@@ -154,8 +180,8 @@ const load = () => {
         else{
           //フィールド
           if(lf==0)returnText += '--\n';
-          m3 = textList[i].match(/^[^ ]+/)[0];
           m4 = textList[i].match(/[^ ]+$/)[0];
+          m3 =textList[i].replace(new RegExp(' +'+m4),'');
           returnText += m1+m4+': '+m3;
           lf = 1;
         }
