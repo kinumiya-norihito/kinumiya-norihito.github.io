@@ -100,7 +100,7 @@ const load = () => {
       else{
         m2='';
       }
-
+      //console.log(textList[i]);
       if(textList[i].indexOf(')')>=0){
         //コンストラクタかメソッド
         if(lf==0)returnText += '--\n--\n';
@@ -130,27 +130,29 @@ const load = () => {
         prm = prm.replace(/\)|\(/g,'');
         let rap = [];
         lv = 0;
-        while(prm[i]){
-          switch(prm[i]){
+        let j=0;
+        //console.log(prm);
+        while(prm[j]){
+          switch(prm[j]){
             case '<':
               lv++;
-              if(lv==1)sp=i;
+              if(lv==1)sp=j;
               break;
             case '>':
               lv--;
               if(lv==0){
-                ep=i+1;
+                ep=j+1;
                 //console.log(importText.substring(sp,ep));
                 rap.push(prm.substring(sp,ep));
                 prm = prm.replace(prm.substring(sp,ep),'*rap*');
-                i = sp;
+                j = sp;
               }
               break;
             default:
           }
-          i++;
+          j++;
         }
-        console.log(rap);
+        //console.log(rap);
         prm = prm.replace(/ +,|, +/g,',');
         prm = prm.split(',');
         for(let j=0;prm[j];j++){
@@ -190,7 +192,7 @@ const load = () => {
       returnText += '\n';
 
     }
-    exportArea.value = returnText;
+    exportArea.value = returnText.replace(/\n$/,'');
   };
   proButton.addEventListener('click',proce);
 };
